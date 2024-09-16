@@ -8,16 +8,18 @@
   justify-content: center;
   flex-direction: row;
   position: relative;
+  filter: contrast(100%) brightness(100%) blur(0.01px);
 }
 .homepage {
   opacity: 0;
   min-height: 100vh;
   transition: opacity 0.5s ease-in-out;
   width: 100vw;
-  background-color: #1e1e1e;
+  
   display: flex;
   justify-content: center;
   align-items: center;
+  
   font-size: 2rem;
 }
 .homepage.visible{

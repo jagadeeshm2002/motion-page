@@ -1,0 +1,53 @@
+import React, { useState, useEffect } from 'react';
+
+interface RandomTextRevealProps {
+  text: string;
+}
+
+const RandomTextReveal: React.FC<RandomTextRevealProps> = ({ text }) => {
+  const [displayedText, setDisplayedText] = useState<string>('');
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+{}|:"<>?[];,./`~'; // Random characters to display
+
+  useEffect(() => {
+    let interval: any;
+    let currentIndex = 0;
+
+    // Function to generate random characters
+    const getRandomChar = (): string => {
+      return characters[Math.floor(Math.random() * characters.length)];
+    };
+
+    // Function to update the displayed text
+    const updateText = () => {
+      if (currentIndex <= text.length) {
+        // Create a random string with the correct characters revealed up to the currentIndex
+        const randomText = text.split('').map((char, index) => {
+          if (index < currentIndex) {
+            return char; // Reveal the correct character
+          } else {
+            return getRandomChar(); // Show random characters for the rest
+          }
+        }).join('');
+
+        setDisplayedText(randomText);
+        currentIndex++;
+      } else {
+        clearInterval(interval); // Stop when all characters are revealed
+      }
+    };
+
+    // Start the interval to update the text every 100ms
+    interval = setInterval(updateText, 100);
+
+    // Cleanup the interval on component unmount
+    return () => clearInterval(interval);
+  }, [text]); // Rerun the effect when text prop changes
+
+  return (
+    <div style={{ fontFamily: 'monospace', fontSize: '24px' }}>
+      {displayedText}
+    </div>
+  );
+};
+
+export default RandomTextReveal;
