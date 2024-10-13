@@ -19,7 +19,7 @@ const useRandomTextReveal = (
   const [hoverActive, setHoverActive] = useState<boolean>(false); // The hover state
 
   useEffect(() => {
-    if (!trigger&& !hoverActive) return; // Animation only starts when trigger or hoverActive is true
+    if (!trigger && !hoverActive) return; // Animation only starts when trigger or hoverActive is true
 
     let interval: any;
     let currentIndex = 0;
@@ -69,7 +69,7 @@ const RandomTextReveal: React.FC<RandomTextRevealProps> = ({
   // Use the custom hook for animation (triggered by hoverActive state)
   const [displayedText, setHoverActive] = useRandomTextReveal(
     text,
-    hover|| true,
+    hover || true,
     intervalTime,
     characters
   );
@@ -77,11 +77,10 @@ const RandomTextReveal: React.FC<RandomTextRevealProps> = ({
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity:1 }}
-      whileHover={{ opacity: hover?[0,1] :1}} 
+      animate={{ opacity: 1 }}
+      whileHover={{ opacity: hover ? [0, 1] : 1 }}
       className={props.className}
       transition={{ duration: 0.5 }}
-      style={{ fontFamily: "monospace", fontSize: "24px", cursor: "pointer" }}
       onMouseEnter={() => hover && setHoverActive(true)} // Start on hover enter
       // onMouseLeave={() => hover && setHoverActive(false)} // Reset on hover exit
     >
@@ -90,9 +89,7 @@ const RandomTextReveal: React.FC<RandomTextRevealProps> = ({
           <motion.span
             key={index}
             initial={{ opacity: 0 }}
-           
-            
-            animate={{ opacity:1 }} 
+            animate={{ opacity: 1 }}
             // Animate based on hover state
             // whileHover={{opacity:1}}
             exit={{ opacity: 0 }}

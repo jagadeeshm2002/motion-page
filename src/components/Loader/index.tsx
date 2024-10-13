@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
 import styles from "./loader.module.scss";
-import { useEffect, useState } from "react";
+import { useEffect} from "react";
+import ProgressHook from "../../hooks/ProgressHook";
 
 type Props = { setIsComplete: Function };
 export default function HomePage({ setIsComplete }: Props) {
-  const [progress, setProgress] = useState(0);
-  const [finished, setFinished] = useState(false);
+ const {progress,finished} = ProgressHook();
 
   const transition = {
     duration: 3,
@@ -51,25 +51,7 @@ export default function HomePage({ setIsComplete }: Props) {
       setIsComplete(true);
     }
   }, [finished, setIsComplete]);
-  useEffect(() => {
-    const loader = setInterval(() => {
-      setProgress((prevProgress) => {
-        if (prevProgress >= 100) {
-          clearInterval(loader);
-          setTimeout(() => {
-            setFinished(true);
-
-            // Trigger grid animation after loader completes
-          }, 500); // Stop when progress reaches 100
-          return 100;
-        }
-        const randomNumber = Math.floor(Math.random() * 10); // Random increment
-        return Math.min(prevProgress + randomNumber, 100); // Ensure progress doesn't exceed 100
-      });
-    }, 300); // Runs every 300ms (adjust the interval duration as needed)
-
-    return () => clearInterval(loader); // Clear the interval on component unmount
-  }, []);
+  
   return (
     <div className={styles.main}>
       {finished && (
