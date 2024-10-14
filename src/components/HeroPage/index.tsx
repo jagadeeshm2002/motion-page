@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./HeroPage.module.scss";
 import classNames from "classnames";
 import vector from "../../assets/image/Vector.png";
@@ -9,6 +9,13 @@ import corner from "../../assets/image/corner.png";
 type Props = {};
 
 function HeroPage({}: Props) {
+  const [randomDelays, setRandomDelays] = useState<string[]>([]);
+
+  useEffect(() => {
+    
+    const delays = Array.from({ length: 5 }, () => (Math.random() * 1.5).toFixed(2)); 
+    setRandomDelays(delays);
+  }, []);
   const time = new Date()
     .toTimeString()
     .split(" ")[0]
@@ -62,19 +69,36 @@ function HeroPage({}: Props) {
               />
               <img src={corner} alt="corner" />
               <div className={styles.asideinner}>
-              {"// wellcome to 💩 life /let journeybegin = true; /if (challenges) {/ debug(); /}else {/ execute(); /};"
-                .split("/")
-                .map((char, index) => (
-                  <p
-                    key={index}
-                    className={classNames(styles.asideText, styles.slikscreen)}
-                  >
-                    {char}
-                  </p>
-                ))}
+                {"// wellcome to 💩 life /let journeybegin = true; /if (challenges) {/ debug(); /}else {/ execute(); /};"
+                  .split("/")
+                  .map((char, index) => (
+                    <p
+                      key={index}
+                      className={classNames(
+                        styles.asideText,
+                        styles.slikscreen
+                      )}
+                    >
+                      {char}
+                    </p>
+                  ))}
+              </div>
             </div>
+          </div>
+          <div className={styles.bottomContainer}>
+            <div className={styles.bottomLoader}>
+            {randomDelays.map((delay, index) => (
+        <div key={index} style={{ animationDelay: `${delay}s` }} />
+      ))}
             </div>
-            
+            <div className={styles.bottomParagarph}>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                <br />
+                sed do eiusmod tempor incididunt ut <br />
+                labore et labore et dolore magna aliqua.
+              </p>
+            </div>
           </div>
         </div>
       </div>
